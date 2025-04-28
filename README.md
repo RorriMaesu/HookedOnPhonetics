@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Hooked On Phonetics Logo](docs/logo.png)
+<!-- Logo will be added here in the future -->
 
 A production-ready, full-stack literacy and speech web application designed to help users improve their reading, writing, and speech skills.
 
@@ -19,7 +19,8 @@ A production-ready, full-stack literacy and speech web application designed to h
 
 Hooked On Phonetics is a comprehensive literacy platform that provides interactive tools for phonics, fluency, morphology, sentence construction, semantic analysis, context clues, story mapping, speech practice, and writing workshops.
 
-![Architecture Diagram](docs/architecture-diagram.png)
+<!-- Architecture diagram will be added here in the future -->
+<!-- ![Architecture Diagram](docs/architecture-diagram.png) -->
 
 ### Key Features
 
