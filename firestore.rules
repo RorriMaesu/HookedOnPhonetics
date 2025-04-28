@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to read and write only their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // User progress data
+    match /progress/{progressId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // User settings
+    match /settings/{settingId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+    
+    // Shared educational content (read-only for authenticated users)
+    match /content/{contentId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Only admins can write (handled through Firebase Admin SDK)
+    }
+  }
+}

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, scaffold ]
+  pull_request:
+    branches: [ main, scaffold ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: latest
+        
+    - name: Install dependencies
+      run: pnpm install
+      
+    - name: Lint
+      run: pnpm lint
+      
+    - name: Test
+      run: pnpm test
+      
+    - name: Build
+      run: pnpm build
+      
+    - name: Playwright E2E Test
+      run: |
+        pnpm dev &
+        npx playwright install --with-deps
+        npx playwright test
+      env:
+        CI: true
