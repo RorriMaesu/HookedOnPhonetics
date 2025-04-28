@@ -39,7 +39,7 @@ export const mockPassages = [
   {
     id: 'repeated_reading',
     title: 'The Lost Key',
-    text: 'Maya couldn't find her house key anywhere. She looked in her backpack, on her desk, and under her bed. She even checked all her coat pockets. "Mom, have you seen my key?" she called. Her mother suggested checking the kitchen counter. Maya ran to the kitchen and there it was, right next to the fruit bowl. "I must have left it there when I got a snack after school," she thought. Maya was relieved. She put the key in her pocket and promised herself to be more careful next time.',
+    text: 'Maya could not find her house key anywhere. She looked in her backpack, on her desk, and under her bed. She even checked all her coat pockets. "Mom, have you seen my key?" she called. Her mother suggested checking the kitchen counter. Maya ran to the kitchen and there it was, right next to the fruit bowl. "I must have left it there when I got a snack after school," she thought. Maya was relieved. She put the key in her pocket and promised herself to be more careful next time.',
     wordCount: 82,
     difficulty: 'beginner',
     targetWcpm: 100,
@@ -70,11 +70,11 @@ export const mockPassages = [
 
 /**
  * Get a passage by ID
- * 
+ *
  * @param {string} id - Passage ID
  * @returns {Object|null} - Passage object or null if not found
  */
-export const getPassageById = (id) => {
+export const getPassageById = id => {
   return mockPassages.find(passage => passage.id === id) || null;
 };
 
