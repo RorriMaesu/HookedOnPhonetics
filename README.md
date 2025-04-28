@@ -286,18 +286,39 @@ The backend is deployed to Firebase Functions:
    - Login to Firebase: `firebase login:ci` to get a token
    - Add the token to GitHub Secrets as `FIREBASE_TOKEN`
    - Add all Firebase configuration values to GitHub Secrets
+   - **Important**: Upgrade your Firebase project to the Blaze (pay-as-you-go) plan to deploy Firebase Functions
+     - Visit: https://console.firebase.google.com/project/hookedonphonetics-d58c3/usage/details
+     - Click on "Upgrade" to switch to the Blaze plan
 
 3. **GitHub Secrets**:
    Add the following secrets to your repository:
-   - `FIREBASE_API_KEY`
-   - `FIREBASE_AUTH_DOMAIN`
-   - `FIREBASE_PROJECT_ID`
-   - `FIREBASE_STORAGE_BUCKET`
-   - `FIREBASE_MESSAGING_SENDER_ID`
-   - `FIREBASE_APP_ID`
-   - `FIREBASE_MEASUREMENT_ID`
-   - `FIREBASE_TOKEN`
-   - `FIREBASE_FUNCTIONS_URL` (e.g., `https://us-central1-hookedonphonetics-d58c3.cloudfunctions.net/api`)
+
+   - `FIREBASE_API_KEY`: AIzaSyAHYqdkPxtRs9Ok07GRkmGS7-0AqKxZeZc
+   - `FIREBASE_AUTH_DOMAIN`: hookedonphonetics-d58c3.firebaseapp.com
+   - `FIREBASE_PROJECT_ID`: hookedonphonetics-d58c3
+   - `FIREBASE_STORAGE_BUCKET`: hookedonphonetics-d58c3.firebasestorage.app
+   - `FIREBASE_MESSAGING_SENDER_ID`: 311010495947
+   - `FIREBASE_APP_ID`: 1:311010495947:web:8ceff4b0c881385aaeba4e
+   - `FIREBASE_MEASUREMENT_ID`: G-X9Q90Q9R43
+   - `FIREBASE_TOKEN`: (Get this by running `firebase login:ci`)
+   - `FIREBASE_FUNCTIONS_URL`: https://us-central1-hookedonphonetics-d58c3.cloudfunctions.net/api
+   - `FIREBASE_SERVICE_ACCOUNT`: (The entire JSON content of your service account key file)
+
+   To add these secrets:
+
+   1. Go to your repository on GitHub
+   2. Click on "Settings"
+   3. In the left sidebar, click on "Secrets and variables" > "Actions"
+   4. Click on "New repository secret"
+   5. Add each secret with the name and value as listed above
+
+   For the `FIREBASE_SERVICE_ACCOUNT` secret:
+
+   1. Go to the Firebase Console: https://console.firebase.google.com/project/hookedonphonetics-d58c3/settings/serviceaccounts/adminsdk
+   2. Click on "Generate new private key"
+   3. Open the downloaded JSON file
+   4. Copy the entire content of the file
+   5. Paste it as the value for the `FIREBASE_SERVICE_ACCOUNT` secret
 
 ## Config & Security
 

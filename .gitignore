@@ -52,6 +52,7 @@ Thumbs.db
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+functions/config/serviceAccountKey.json
 
 # Generated files
 *.generated.*
