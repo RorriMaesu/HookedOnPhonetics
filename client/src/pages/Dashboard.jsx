@@ -1,10 +1,25 @@
 import { Link } from 'react-router-dom';
 import useProgressStore from '../store/progressStore';
 import useSettingsStore from '../store/settingsStore';
+import useUserStore from '../store/userStore';
+import useSkillsStore from '../store/skillsStore';
+import { useEffect } from 'react';
+import SkillTree from '../components/SkillTree/SkillTree';
 
 function Dashboard() {
   const getOverallProgress = useProgressStore(state => state.getOverallProgress);
   const { intensityLevel } = useSettingsStore();
+  const { user } = useUserStore();
+  const {
+    fetchSkills,
+    fetchUserSkills,
+    fetchNextSkill,
+    skills,
+    userSkills,
+    nextSkill,
+    isLoading,
+    error,
+  } = useSkillsStore();
 
   const overallProgress = getOverallProgress();
 
@@ -12,6 +27,23 @@ function Dashboard() {
   const today = new Date();
   const options = { weekday: 'long', month: 'long', day: 'numeric' };
   const formattedDate = today.toLocaleDateString('en-US', options);
+
+  // Fetch skills data when component mounts
+  useEffect(() => {
+    const loadSkillsData = async () => {
+      try {
+        await fetchSkills();
+        if (user) {
+          await fetchUserSkills(user.uid);
+          await fetchNextSkill();
+        }
+      } catch (err) {
+        console.error('Error loading skills data:', err);
+      }
+    };
+
+    loadSkillsData();
+  }, [fetchSkills, fetchUserSkills, fetchNextSkill, user]);
 
   return (
     <div className="space-y-6">
@@ -150,6 +182,25 @@ function Dashboard() {
             Start writing &rarr;
           </Link>
         </div>
+      </div>
+
+      <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h2 className="text-xl font-bold mb-4">Skill Tree</h2>
+        <p className="text-gray-600 mb-4">
+          Track your progress and see recommended skills to learn next.
+        </p>
+        {isLoading ? (
+          <div className="text-center py-8">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+            <p className="mt-2 text-gray-600">Loading skills...</p>
+          </div>
+        ) : error ? (
+          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
+            <p>Error loading skills: {error}</p>
+          </div>
+        ) : (
+          <SkillTree skills={skills} userSkills={userSkills} nextSkill={nextSkill} />
+        )}
       </div>
 
       <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
