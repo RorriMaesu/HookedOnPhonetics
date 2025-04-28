@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<!-- Logo will be added here in the future -->
+![Hooked On Phonetics Logo](client/public/images/logo.png)
 
 A production-ready, full-stack literacy and speech web application designed to help users improve their reading, writing, and speech skills.
 
