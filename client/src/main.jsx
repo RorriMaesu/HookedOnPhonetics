@@ -7,7 +7,7 @@ import './config/firebase'; // Initialize Firebase
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/HookedOnPhonetics">
       <App />
     </BrowserRouter>
   </React.StrictMode>
