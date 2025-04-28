@@ -2,6 +2,9 @@
 
 A production-ready, full-stack literacy and speech web application designed to help users improve their reading, writing, and speech skills.
 
+[![Deploy to GitHub Pages](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-gh-pages.yml/badge.svg)](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-gh-pages.yml)
+[![Deploy to Firebase](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-firebase.yml/badge.svg)](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-firebase.yml)
+
 ## Overview
 
 Hooked On Phonetics is a comprehensive literacy platform that provides interactive tools for phonics, fluency, morphology, sentence construction, semantic analysis, context clues, story mapping, speech practice, and writing workshops.
