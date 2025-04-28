@@ -1,9 +1,19 @@
 # Hooked On Phonetics
 
+<div align="center">
+
+![Hooked On Phonetics Logo](docs/logo.png)
+
 A production-ready, full-stack literacy and speech web application designed to help users improve their reading, writing, and speech skills.
 
 [![Deploy to GitHub Pages](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-gh-pages.yml/badge.svg)](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-gh-pages.yml)
 [![Deploy to Firebase](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-firebase.yml/badge.svg)](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-firebase.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-20.x-brightgreen.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
+[![Firebase](https://img.shields.io/badge/Firebase-10.x-orange.svg)](https://firebase.google.com/)
+
+</div>
 
 ## Overview
 
@@ -38,8 +48,8 @@ Hooked On Phonetics is a comprehensive literacy platform that provides interacti
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/hooked-on-phonetics.git
-   cd hooked-on-phonetics
+   git clone https://github.com/RorriMaesu/HookedOnPhonetics.git
+   cd HookedOnPhonetics
    ```
 
 2. Install dependencies:
@@ -51,13 +61,19 @@ Hooked On Phonetics is a comprehensive literacy platform that provides interacti
 3. Set up environment variables:
 
    - Copy `.env.example` to `.env` in both the client and server directories
-   - Fill in your API keys and configuration values
+   - Fill in your API keys and configuration values (see Configuration section below)
 
 4. Set up Python environment for image generation (optional):
+
    ```bash
    cd scripts
    pip install -r requirements.txt
    ```
+
+5. Set up Firebase:
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+   - Enable Authentication, Firestore, and Functions
+   - Download your Firebase configuration
 
 ## Running Locally
 
@@ -290,22 +306,20 @@ The backend is deployed to Firebase Functions:
    - Add the token to GitHub Secrets as `FIREBASE_TOKEN`
    - Add all Firebase configuration values to GitHub Secrets
    - **Important**: Upgrade your Firebase project to the Blaze (pay-as-you-go) plan to deploy Firebase Functions
-     - Visit: https://console.firebase.google.com/project/hookedonphonetics-d58c3/usage/details
-     - Click on "Upgrade" to switch to the Blaze plan
 
 3. **GitHub Secrets**:
    Add the following secrets to your repository:
 
-   - `FIREBASE_API_KEY`: AIzaSyAHYqdkPxtRs9Ok07GRkmGS7-0AqKxZeZc
-   - `FIREBASE_AUTH_DOMAIN`: hookedonphonetics-d58c3.firebaseapp.com
-   - `FIREBASE_PROJECT_ID`: hookedonphonetics-d58c3
-   - `FIREBASE_STORAGE_BUCKET`: hookedonphonetics-d58c3.firebasestorage.app
-   - `FIREBASE_MESSAGING_SENDER_ID`: 311010495947
-   - `FIREBASE_APP_ID`: 1:311010495947:web:8ceff4b0c881385aaeba4e
-   - `FIREBASE_MEASUREMENT_ID`: G-X9Q90Q9R43
-   - `FIREBASE_TOKEN`: (Get this by running `firebase login:ci`)
-   - `FIREBASE_FUNCTIONS_URL`: https://us-central1-hookedonphonetics-d58c3.cloudfunctions.net/api
-   - `FIREBASE_SERVICE_ACCOUNT`: (The entire JSON content of your service account key file)
+   - `FIREBASE_API_KEY`: Your Firebase API key
+   - `FIREBASE_AUTH_DOMAIN`: Your Firebase auth domain
+   - `FIREBASE_PROJECT_ID`: Your Firebase project ID
+   - `FIREBASE_STORAGE_BUCKET`: Your Firebase storage bucket
+   - `FIREBASE_MESSAGING_SENDER_ID`: Your Firebase messaging sender ID
+   - `FIREBASE_APP_ID`: Your Firebase app ID
+   - `FIREBASE_MEASUREMENT_ID`: Your Firebase measurement ID
+   - `FIREBASE_TOKEN`: Your Firebase CI token
+   - `FIREBASE_FUNCTIONS_URL`: Your Firebase Functions URL
+   - `FIREBASE_SERVICE_ACCOUNT`: Your Firebase service account key JSON
 
    To add these secrets:
 
@@ -313,22 +327,75 @@ The backend is deployed to Firebase Functions:
    2. Click on "Settings"
    3. In the left sidebar, click on "Secrets and variables" > "Actions"
    4. Click on "New repository secret"
-   5. Add each secret with the name and value as listed above
+   5. Add each secret with the name and value from your Firebase project
 
    For the `FIREBASE_SERVICE_ACCOUNT` secret:
 
-   1. Go to the Firebase Console: https://console.firebase.google.com/project/hookedonphonetics-d58c3/settings/serviceaccounts/adminsdk
+   1. Go to the Firebase Console > Project Settings > Service Accounts
    2. Click on "Generate new private key"
    3. Open the downloaded JSON file
    4. Copy the entire content of the file
    5. Paste it as the value for the `FIREBASE_SERVICE_ACCOUNT` secret
 
-## Config & Security
+## Configuration
+
+### Environment Variables
+
+The application uses environment variables for configuration. Copy the `.env.example` files to `.env` in both the client and server directories and fill in your values:
+
+#### Client Environment Variables
+
+```
+# API URL
+VITE_API_URL=http://localhost:3001/api
+
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+#### Server Environment Variables
+
+```
+# Firebase Configuration
+FIREBASE_API_KEY=your_api_key
+FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+FIREBASE_APP_ID=your_app_id
+FIREBASE_MEASUREMENT_ID=your_measurement_id
+
+# API Keys (Optional)
+GEMINI_API_KEY=your_gemini_api_key
+REPLICATE_API_TOKEN=your_replicate_api_token
+DEEPGRAM_API_KEY=your_deepgram_api_key
+
+# Server Configuration
+PORT=3001
+NODE_ENV=development
+```
+
+### Firebase Service Account
+
+For server-side Firebase authentication, you'll need a service account key:
+
+1. Go to Firebase Console > Project Settings > Service Accounts
+2. Click "Generate new private key"
+3. Save the JSON file to `functions/config/serviceAccountKey.json`
+
+### Security
 
 - All secrets are read from `.env` files (not committed to the repository)
 - Example configuration is provided in `.env.example` files
 - Firebase security rules restrict read/write access to authenticated users
 - HTTPS is enforced in production
+- Service account keys are never committed to the repository
 
 ## Troubleshooting
 
