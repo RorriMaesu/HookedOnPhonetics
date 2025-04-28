@@ -51,4 +51,12 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  // GitHub Pages deployment configuration
+  base: '/HookedOnPhonetics/',
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    // Ensure assets are properly referenced with the base path
+    assetsDir: 'assets',
+  },
 });

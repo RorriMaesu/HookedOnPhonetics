@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
   onAuthStateChanged,
+  signInWithCustomToken,
 } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { authAPI } from '../services/api';
 
 const useUserStore = create(set => ({
   user: null,
@@ -40,20 +40,24 @@ const useUserStore = create(set => ({
   register: async (email, password, displayName) => {
     set({ isLoading: true, error: null });
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Register user through our API
+      const response = await authAPI.register({ email, password, displayName });
 
-      // Update the user profile with display name
-      if (displayName) {
-        await updateProfile(userCredential.user, { displayName });
+      // Sign in with the custom token from our API
+      if (response.token) {
+        await signInWithCustomToken(auth, response.token);
       }
 
+      // Get the current user from Firebase Auth
+      const user = auth.currentUser;
+
       set({
-        user: userCredential.user,
+        user,
         isAuthenticated: true,
         isLoading: false,
       });
 
-      return userCredential.user;
+      return user;
     } catch (error) {
       set({ error: error.message, isLoading: false });
       throw error;
@@ -64,15 +68,27 @@ const useUserStore = create(set => ({
   login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // Login through our API
+      const response = await authAPI.login({ email, password });
+
+      // Sign in with the custom token from our API
+      if (response.token) {
+        await signInWithCustomToken(auth, response.token);
+      } else {
+        // Fallback to direct Firebase Auth if no token is provided
+        await signInWithEmailAndPassword(auth, email, password);
+      }
+
+      // Get the current user from Firebase Auth
+      const user = auth.currentUser;
 
       set({
-        user: userCredential.user,
+        user,
         isAuthenticated: true,
         isLoading: false,
       });
 
-      return userCredential.user;
+      return user;
     } catch (error) {
       set({ error: error.message, isLoading: false });
       throw error;
@@ -83,7 +99,12 @@ const useUserStore = create(set => ({
   logout: async () => {
     set({ isLoading: true });
     try {
+      // Logout through our API
+      await authAPI.logout();
+
+      // Sign out from Firebase Auth
       await signOut(auth);
+
       set({ user: null, isAuthenticated: false, isLoading: false });
     } catch (error) {
       set({ error: error.message, isLoading: false });

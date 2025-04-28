@@ -242,20 +242,62 @@ cd e2e
 npx playwright test
 ```
 
-## CI/CD
+## CI/CD and Deployment
 
 The project uses GitHub Actions for continuous integration and deployment:
 
-- **Trigger**: Push to `main` or `scaffold` branches, or pull requests to these branches
-- **Environment**: Windows latest
+### GitHub Pages Deployment
+
+The frontend is deployed to GitHub Pages:
+
+- **Trigger**: Push to `main` branch or manual dispatch
+- **Environment**: Ubuntu latest
 - **Steps**:
   1. Checkout code
   2. Set up Node.js and pnpm
   3. Install dependencies
-  4. Run linting
-  5. Run tests
-  6. Build the application
-  7. Run Playwright E2E tests
+  4. Build the application with environment variables from GitHub Secrets
+  5. Deploy to GitHub Pages
+
+### Firebase Functions Deployment
+
+The backend is deployed to Firebase Functions:
+
+- **Trigger**: Push to `main` branch that changes Firebase-related files or manual dispatch
+- **Environment**: Ubuntu latest
+- **Steps**:
+  1. Checkout code
+  2. Set up Node.js
+  3. Install Firebase CLI
+  4. Install dependencies
+  5. Deploy to Firebase Functions and Firestore
+
+### Setting Up Deployment
+
+1. **GitHub Pages**:
+
+   - Go to your repository settings
+   - Navigate to Pages
+   - Set source to GitHub Actions
+
+2. **Firebase**:
+
+   - Install Firebase CLI: `npm install -g firebase-tools`
+   - Login to Firebase: `firebase login:ci` to get a token
+   - Add the token to GitHub Secrets as `FIREBASE_TOKEN`
+   - Add all Firebase configuration values to GitHub Secrets
+
+3. **GitHub Secrets**:
+   Add the following secrets to your repository:
+   - `FIREBASE_API_KEY`
+   - `FIREBASE_AUTH_DOMAIN`
+   - `FIREBASE_PROJECT_ID`
+   - `FIREBASE_STORAGE_BUCKET`
+   - `FIREBASE_MESSAGING_SENDER_ID`
+   - `FIREBASE_APP_ID`
+   - `FIREBASE_MEASUREMENT_ID`
+   - `FIREBASE_TOKEN`
+   - `FIREBASE_FUNCTIONS_URL` (e.g., `https://us-central1-hookedonphonetics-d58c3.cloudfunctions.net/api`)
 
 ## Config & Security
 
