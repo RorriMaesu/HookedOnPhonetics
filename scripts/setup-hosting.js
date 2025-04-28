@@ -19,7 +19,7 @@ function runCommand(command) {
 // Check if user is logged in to Firebase
 try {
   const whoami = runCommand('firebase login:list');
-  if (!whoami.includes('hookedonphonetics-d58c3')) {
+  if (!whoami.includes('Logged in')) {
     console.log('Please login to Firebase first:');
     console.log('firebase login');
     process.exit(1);
