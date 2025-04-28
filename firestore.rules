@@ -1,6 +1,13 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Allow read/write access during development
+    match /{document=**} {
+      allow read, write: if true;
+    }
+
+    // Uncomment the rules below for production
+    /*
     // Allow authenticated users to read and write only their own data
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
@@ -49,5 +56,6 @@ service cloud.firestore {
       allow create: if request.auth != null; // Users can create events
       allow update, delete: if false; // Events should be immutable
     }
+    */
   }
 }

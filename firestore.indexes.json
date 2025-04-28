@@ -13,6 +13,30 @@
           "order": "DESCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "skills",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "difficulty",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "lessons",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "skillId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "difficulty",
+          "order": "ASCENDING"
+        }
+      ]
     }
   ],
   "fieldOverrides": []

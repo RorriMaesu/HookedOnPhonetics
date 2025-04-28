@@ -2,19 +2,38 @@
  * API service for making requests to the backend
  */
 
-// Base API URL from environment variables
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  'https://us-central1-hookedonphonetics-d58c3.cloudfunctions.net/api';
+import { getAuth } from 'firebase/auth';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+import { API_BASE_URL } from '../config/constants';
+
+// Get Firebase Functions instance
+const functions = getFunctions();
 
 /**
- * Make a request to the API
+ * Make a request to the API using Firebase Functions
+ * @param {string} functionName - The Firebase function name
+ * @param {Object} data - The data to send to the function
+ * @returns {Promise<any>} - The response data
+ */
+const callFunction = async (functionName, data = {}) => {
+  try {
+    const functionRef = httpsCallable(functions, functionName);
+    const result = await functionRef(data);
+    return result.data;
+  } catch (error) {
+    console.error(`Function Error (${functionName}):`, error);
+    throw error;
+  }
+};
+
+/**
+ * Make a request to the API using fetch
  * @param {string} endpoint - The API endpoint
  * @param {Object} options - Request options
  * @returns {Promise<any>} - The response data
  */
 const apiRequest = async (endpoint, options = {}) => {
-  const url = `${API_URL}${endpoint}`;
+  const url = `${API_BASE_URL}${endpoint}`;
 
   // Default headers
   const headers = {
@@ -22,17 +41,25 @@ const apiRequest = async (endpoint, options = {}) => {
     ...options.headers,
   };
 
-  // Add auth token if available
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
   try {
+    // Get the current user's ID token
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      const token = await user.getIdToken();
+      headers.Authorization = `Bearer ${token}`;
+    }
+
     const response = await fetch(url, {
       ...options,
       headers,
     });
+
+    // For 204 No Content responses
+    if (response.status === 204) {
+      return null;
+    }
 
     const data = await response.json();
 
@@ -52,52 +79,39 @@ const apiRequest = async (endpoint, options = {}) => {
  */
 export const authAPI = {
   /**
-   * Register a new user
-   * @param {Object} userData - User registration data
-   * @returns {Promise<Object>} - The registered user data
+   * Get the current user's profile
+   * @returns {Promise<Object>} - The user profile data
    */
-  register: async userData => {
-    const data = await apiRequest('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify(userData),
-    });
+  getCurrentUser: async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
 
-    // Store the auth token
-    if (data.token) {
-      localStorage.setItem('authToken', data.token);
+      if (!user) {
+        throw new Error('No user is currently signed in');
+      }
+
+      // Get additional user data from Firestore if needed
+      return {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified,
+      };
+    } catch (error) {
+      console.error('Error getting current user:', error);
+      throw error;
     }
-
-    return data;
   },
 
   /**
-   * Login a user
-   * @param {Object} credentials - User login credentials
-   * @returns {Promise<Object>} - The logged in user data
+   * Update the current user's profile
+   * @param {Object} profileData - The profile data to update
+   * @returns {Promise<Object>} - The updated profile data
    */
-  login: async credentials => {
-    const data = await apiRequest('/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    });
-
-    // Store the auth token
-    if (data.token) {
-      localStorage.setItem('authToken', data.token);
-    }
-
-    return data;
-  },
-
-  /**
-   * Logout the current user
-   * @returns {Promise<Object>} - The logout response
-   */
-  logout: async () => {
-    // Remove the auth token
-    localStorage.removeItem('authToken');
-
-    return { message: 'Logout successful' };
+  updateProfile: async profileData => {
+    return callFunction('updateUserProfile', profileData);
   },
 };
 
@@ -111,7 +125,7 @@ export const progressAPI = {
    * @returns {Promise<Object>} - The user progress data
    */
   getUserProgress: async userId => {
-    return apiRequest(`/progress/${userId}`);
+    return callFunction('getUserProgress', { userId });
   },
 
   /**
@@ -120,10 +134,16 @@ export const progressAPI = {
    * @returns {Promise<Object>} - The saved progress data
    */
   saveProgress: async progressData => {
-    return apiRequest('/progress', {
-      method: 'POST',
-      body: JSON.stringify(progressData),
-    });
+    return callFunction('saveProgress', progressData);
+  },
+
+  /**
+   * Get user statistics
+   * @param {string} userId - The user ID
+   * @returns {Promise<Object>} - The user statistics
+   */
+  getUserStats: async userId => {
+    return callFunction('getUserStats', { userId });
   },
 };
 
@@ -131,7 +151,7 @@ export const progressAPI = {
  * Health check API method
  */
 export const healthCheck = async () => {
-  return apiRequest('/health');
+  return callFunction('healthCheck');
 };
 
 /**
@@ -139,15 +159,32 @@ export const healthCheck = async () => {
  */
 export const skillsAPI = {
   /**
+   * Get all skills
+   * @returns {Promise<Array>} - Array of all skills
+   */
+  getAllSkills: async () => {
+    return callFunction('getAllSkills');
+  },
+
+  /**
+   * Get a skill by ID
+   * @param {string} skillId - The skill ID
+   * @returns {Promise<Object>} - The skill data
+   */
+  getSkill: async skillId => {
+    return callFunction('getSkill', { skillId });
+  },
+
+  /**
    * Record a skill attempt
    * @param {string} skillId - The skill ID
    * @param {Object} attemptData - The attempt data
    * @returns {Promise<Object>} - The updated skill data
    */
   recordAttempt: async (skillId, attemptData) => {
-    return apiRequest(`/skills/${skillId}/attempt`, {
-      method: 'POST',
-      body: JSON.stringify(attemptData),
+    return callFunction('recordSkillAttempt', {
+      skillId,
+      ...attemptData,
     });
   },
 
@@ -157,7 +194,7 @@ export const skillsAPI = {
    * @returns {Promise<Object>} - The next skill recommendation
    */
   getNextSkill: async userId => {
-    return apiRequest(`/users/${userId}/nextSkill`);
+    return callFunction('getNextSkill', { userId });
   },
 
   /**
@@ -167,7 +204,57 @@ export const skillsAPI = {
    * @returns {Promise<Object>} - The skill data
    */
   getUserSkill: async (userId, skillId) => {
-    return apiRequest(`/users/${userId}/skills/${skillId}`);
+    return callFunction('getUserSkill', { userId, skillId });
+  },
+
+  /**
+   * Get all user skills
+   * @param {string} userId - The user ID
+   * @returns {Promise<Object>} - Object mapping skill IDs to user skill data
+   */
+  getUserSkills: async userId => {
+    return callFunction('getUserSkills', { userId });
+  },
+};
+
+/**
+ * Content API methods
+ */
+export const contentAPI = {
+  /**
+   * Get all passages
+   * @param {Object} options - Query options
+   * @returns {Promise<Array>} - Array of passages
+   */
+  getPassages: async (options = {}) => {
+    return callFunction('getPassages', options);
+  },
+
+  /**
+   * Get a passage by ID
+   * @param {string} passageId - The passage ID
+   * @returns {Promise<Object>} - The passage data
+   */
+  getPassage: async passageId => {
+    return callFunction('getPassage', { passageId });
+  },
+
+  /**
+   * Get all lessons
+   * @param {Object} options - Query options
+   * @returns {Promise<Array>} - Array of lessons
+   */
+  getLessons: async (options = {}) => {
+    return callFunction('getLessons', options);
+  },
+
+  /**
+   * Get a lesson by ID
+   * @param {string} lessonId - The lesson ID
+   * @returns {Promise<Object>} - The lesson data
+   */
+  getLesson: async lessonId => {
+    return callFunction('getLesson', { lessonId });
   },
 };
 
@@ -175,5 +262,6 @@ export default {
   auth: authAPI,
   progress: progressAPI,
   skills: skillsAPI,
+  content: contentAPI,
   healthCheck,
 };

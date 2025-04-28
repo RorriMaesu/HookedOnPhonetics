@@ -1,4 +1,4 @@
-import { onRequest } from 'firebase-functions/v2/https';
+import { onRequest, onCall } from 'firebase-functions/v2/https';
 import { onDocumentCreated } from 'firebase-functions/v2/firestore';
 import express from 'express';
 import cors from 'cors';
@@ -291,5 +291,169 @@ export const onProgressUpdate = onDocumentCreated('progress/{progressId}', async
     console.log(`Updated BKT state for user ${userId}, skill ${skillId}, correct: ${correct}`);
   } catch (error) {
     console.error('Error in onProgressUpdate trigger:', error);
+  }
+});
+
+// Callable functions
+export const healthCheck = onCall({ region: 'us-central1' }, async request => {
+  return { status: 'ok', timestamp: new Date().toISOString() };
+});
+
+export const getAllSkills = onCall({ region: 'us-central1' }, async request => {
+  try {
+    const skillsSnapshot = await getFirestore().collection('skills').orderBy('difficulty').get();
+
+    const skills = [];
+    skillsSnapshot.forEach(doc => {
+      skills.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+    });
+
+    return skills;
+  } catch (error) {
+    console.error('Error getting skills:', error);
+    throw new Error('Failed to get skills');
+  }
+});
+
+export const getSkill = onCall({ region: 'us-central1' }, async request => {
+  try {
+    const { skillId } = request.data;
+
+    if (!skillId) {
+      throw new Error('Skill ID is required');
+    }
+
+    const skillDoc = await getFirestore().collection('skills').doc(skillId).get();
+
+    if (!skillDoc.exists) {
+      throw new Error('Skill not found');
+    }
+
+    return {
+      id: skillDoc.id,
+      ...skillDoc.data(),
+    };
+  } catch (error) {
+    console.error('Error getting skill:', error);
+    throw new Error('Failed to get skill');
+  }
+});
+
+export const recordSkillAttempt = onCall({ region: 'us-central1' }, async request => {
+  try {
+    // Ensure user is authenticated
+    if (!request.auth) {
+      throw new Error('User must be authenticated');
+    }
+
+    const { skillId, userId, correct } = request.data;
+
+    if (!skillId || correct === undefined) {
+      throw new Error('Skill ID and correct status are required');
+    }
+
+    // Use the authenticated user's ID if userId is not provided
+    const uid = userId || request.auth.uid;
+
+    // Update BKT state
+    return await updateBktState(uid, skillId, correct);
+  } catch (error) {
+    console.error('Error recording skill attempt:', error);
+    throw new Error('Failed to record skill attempt');
+  }
+});
+
+export const getNextSkillFunction = onCall({ region: 'us-central1' }, async request => {
+  try {
+    // Ensure user is authenticated
+    if (!request.auth) {
+      throw new Error('User must be authenticated');
+    }
+
+    const { userId } = request.data;
+
+    // Use the authenticated user's ID if userId is not provided
+    const uid = userId || request.auth.uid;
+
+    // Get next skill recommendation
+    const nextSkill = await getNextSkill(uid);
+
+    return { nextSkill };
+  } catch (error) {
+    console.error('Error getting next skill:', error);
+    throw new Error('Failed to get next skill');
+  }
+});
+
+export const getUserSkill = onCall({ region: 'us-central1' }, async request => {
+  try {
+    // Ensure user is authenticated
+    if (!request.auth) {
+      throw new Error('User must be authenticated');
+    }
+
+    const { userId, skillId } = request.data;
+
+    if (!skillId) {
+      throw new Error('Skill ID is required');
+    }
+
+    // Use the authenticated user's ID if userId is not provided
+    const uid = userId || request.auth.uid;
+
+    // Get the user's skill
+    const userSkillDoc = await getFirestore()
+      .collection('users')
+      .doc(uid)
+      .collection('skills')
+      .doc(skillId)
+      .get();
+
+    if (!userSkillDoc.exists) {
+      throw new Error('User skill not found');
+    }
+
+    return {
+      id: userSkillDoc.id,
+      ...userSkillDoc.data(),
+    };
+  } catch (error) {
+    console.error('Error getting user skill:', error);
+    throw new Error('Failed to get user skill');
+  }
+});
+
+export const getUserSkills = onCall({ region: 'us-central1' }, async request => {
+  try {
+    // Ensure user is authenticated
+    if (!request.auth) {
+      throw new Error('User must be authenticated');
+    }
+
+    const { userId } = request.data;
+
+    // Use the authenticated user's ID if userId is not provided
+    const uid = userId || request.auth.uid;
+
+    // Get the user's skills
+    const userSkillsSnapshot = await getFirestore()
+      .collection('users')
+      .doc(uid)
+      .collection('skills')
+      .get();
+
+    // Create a map of user skills
+    const userSkills = {};
+    userSkillsSnapshot.forEach(doc => {
+      userSkills[doc.id] = doc.data();
+    });
+
+    return userSkills;
+  } catch (error) {
+    console.error('Error getting user skills:', error);
+    throw new Error('Failed to get user skills');
   }
 });
