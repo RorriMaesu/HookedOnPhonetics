@@ -12,32 +12,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '20'
-        
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: latest
-        
+
     - name: Install dependencies
-      run: pnpm install
-      
+      run: npm install
+
     - name: Lint
-      run: pnpm lint
-      
+      run: npm run lint
+
     - name: Test
-      run: pnpm test
-      
+      run: npm test
+
     - name: Build
-      run: pnpm build
-      
+      run: npm run build
+
     - name: Playwright E2E Test
       run: |
-        pnpm dev &
+        npm run dev &
         npx playwright install --with-deps
         npx playwright test
       env:
