@@ -311,25 +311,42 @@ npx playwright test
 
 ## CI/CD and Deployment
 
-The project uses GitHub Actions for continuous integration and deployment:
+The project uses GitHub Actions for continuous integration and deployment. For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
-### GitHub Pages Deployment
+### Dual Deployment Options
 
-The frontend is deployed to GitHub Pages:
+This project supports two deployment options:
 
-- **Trigger**: Push to `main` branch or manual dispatch
+1. **Firebase Hosting** (Recommended for Production)
+
+   - Complete hosting solution with HTTPS, CDN, and Firebase integration
+   - Deployed to `https://hookedonphonetics-d58c3.web.app`
+   - Ideal for production use with full Firebase functionality
+
+2. **GitHub Pages** (Great for Open Source Sharing)
+   - Free and easy to set up
+   - Deployed to `https://rorrimeasu.github.io/HookedOnPhonetics/`
+   - Ideal for sharing with the open source community
+
+Both deployments use the same Firebase backend, so users can access the same data regardless of which URL they use.
+
+### GitHub Actions Workflows
+
+#### GitHub Pages Deployment
+
+- **Workflow File**: `.github/workflows/deploy-github-pages.yml`
+- **Trigger**: Push to `main` branch that changes client files or manual dispatch
 - **Environment**: Ubuntu latest
 - **Steps**:
   1. Checkout code
-  2. Set up Node.js and pnpm
+  2. Set up Node.js
   3. Install dependencies
   4. Build the application with environment variables from GitHub Secrets
   5. Deploy to GitHub Pages
 
-### Firebase Functions Deployment
+#### Firebase Deployment
 
-The backend is deployed to Firebase Functions:
-
+- **Workflow File**: `.github/workflows/deploy-firebase.yml`
 - **Trigger**: Push to `main` branch that changes Firebase-related files or manual dispatch
 - **Environment**: Ubuntu latest
 - **Steps**:
@@ -337,7 +354,8 @@ The backend is deployed to Firebase Functions:
   2. Set up Node.js
   3. Install Firebase CLI
   4. Install dependencies
-  5. Deploy to Firebase Functions and Firestore
+  5. Build the client application
+  6. Deploy to Firebase (Functions, Firestore, and Hosting)
 
 ### Setting Up Deployment
 
@@ -355,7 +373,18 @@ The backend is deployed to Firebase Functions:
    - Add all Firebase configuration values to GitHub Secrets
    - **Important**: Upgrade your Firebase project to the Blaze (pay-as-you-go) plan to deploy Firebase Functions
 
-3. **GitHub Secrets**:
+### Deployment Scripts
+
+The project includes several scripts to automate the deployment process:
+
+1. **setup-firebase.js**: Sets up Firebase configuration and creates a service account key
+2. **init-firestore.js**: Initializes Firestore with sample data
+3. **setup-functions.js**: Deploys Firebase Functions, Firestore Rules, and Storage Rules
+4. **setup-hosting.js**: Builds and deploys the client application to Firebase Hosting
+5. **setup-github-pages.js**: Builds the client application for GitHub Pages deployment
+6. **setup-all.js**: Runs all the above scripts in sequence
+
+7. **GitHub Secrets**:
    Add the following secrets to your repository:
 
    - `FIREBASE_API_KEY`: Your Firebase API key

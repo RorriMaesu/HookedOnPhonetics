@@ -56,12 +56,14 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  // GitHub Pages deployment configuration
-  base: '/HookedOnPhonetics/',
+  // Deployment configuration
+  // Use environment variable to determine base path
+  // For Firebase Hosting: '/'
+  // For GitHub Pages: '/HookedOnPhonetics/'
+  base: process.env.DEPLOY_TARGET === 'github' ? '/HookedOnPhonetics/' : '/',
   build: {
     outDir: 'dist',
     sourcemap: true,
-    // Ensure assets are properly referenced with the base path
     assetsDir: 'assets',
   },
 });

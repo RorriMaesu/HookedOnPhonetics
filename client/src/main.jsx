@@ -6,6 +6,10 @@ import './index.css';
 import './config/firebase'; // Initialize Firebase
 
 // Create a router with future flags to address warnings
+// Use basename for GitHub Pages if needed
+const isGitHubPages = window.location.hostname.includes('github.io');
+const basename = isGitHubPages ? '/HookedOnPhonetics' : '/';
+
 const router = createBrowserRouter(
   [
     {
@@ -14,7 +18,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/HookedOnPhonetics',
+    basename: basename,
     future: {
       v7_startTransition: true,
       v7_relativeSplatPath: true,
