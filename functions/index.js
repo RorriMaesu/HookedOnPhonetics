@@ -1,4 +1,5 @@
 import { onRequest } from 'firebase-functions/v2/https';
+import { onDocumentCreated } from 'firebase-functions/v2/firestore';
 import express from 'express';
 import cors from 'cors';
 import { initializeApp, cert } from 'firebase-admin/app';
@@ -7,6 +8,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import fs from 'fs';
+import { updateBktState, getNextSkill } from './src/bkt.js';
 
 // Get the current file's directory
 const __filename = fileURLToPath(import.meta.url);
@@ -185,6 +187,72 @@ app.post('/progress', async (req, res) => {
   }
 });
 
+// BKT routes
+app.post('/skills/:skillId/attempt', async (req, res) => {
+  try {
+    const { skillId } = req.params;
+    const { userId, correct } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    // Verify auth token
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const token = authHeader.split('Bearer ')[1];
+    const decodedToken = await getAuth().verifyIdToken(token);
+
+    // Only allow users to update their own data
+    if (decodedToken.uid !== userId) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    // Update BKT state
+    const result = await updateBktState(userId, skillId, correct);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    console.error('BKT update error:', error);
+    return res.status(500).json({ error: error.message || 'Failed to update BKT state' });
+  }
+});
+
+app.get('/users/:userId/nextSkill', async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Verify auth token
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const token = authHeader.split('Bearer ')[1];
+    const decodedToken = await getAuth().verifyIdToken(token);
+
+    // Only allow users to access their own data
+    if (decodedToken.uid !== userId) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    // Get next skill recommendation
+    const nextSkill = await getNextSkill(userId);
+
+    if (!nextSkill) {
+      return res.status(404).json({ message: 'No suitable next skill found' });
+    }
+
+    return res.status(200).json({ nextSkill });
+  } catch (error) {
+    console.error('Next skill error:', error);
+    return res.status(500).json({ error: error.message || 'Failed to get next skill' });
+  }
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -199,3 +267,29 @@ export const api = onRequest(
   },
   app
 );
+
+// Firestore triggers
+export const onProgressUpdate = onDocumentCreated('progress/{progressId}', async event => {
+  try {
+    const progressData = event.data.data();
+    const { userId, activity, score } = progressData;
+
+    if (!userId || !activity) {
+      console.error('Missing required fields in progress document');
+      return;
+    }
+
+    // Map activity to skill ID (this would be more sophisticated in a real app)
+    const skillId = activity.replace(/\s+/g, '_').toLowerCase();
+
+    // Determine if the attempt was correct based on score
+    const correct = score >= 0.7; // Consider 70% or higher as correct
+
+    // Update BKT state
+    await updateBktState(userId, skillId, correct);
+
+    console.log(`Updated BKT state for user ${userId}, skill ${skillId}, correct: ${correct}`);
+  } catch (error) {
+    console.error('Error in onProgressUpdate trigger:', error);
+  }
+});

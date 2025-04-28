@@ -17,23 +17,44 @@ A production-ready, full-stack literacy and speech web application designed to h
 
 ## Overview
 
-Hooked On Phonetics is a comprehensive literacy platform that provides interactive tools for phonics, fluency, morphology, sentence construction, semantic analysis, context clues, story mapping, speech practice, and writing workshops.
+Hooked On Phonetics is a comprehensive literacy platform that provides interactive tools for phonics, fluency, morphology, sentence construction, semantic analysis, context clues, story mapping, speech practice, and writing workshops. The platform is built on an "Integrated Structured-Literacy Stack" that combines evidence-based approaches to literacy instruction with modern technology.
 
 <!-- Architecture diagram will be added here in the future -->
 <!-- ![Architecture Diagram](docs/architecture-diagram.png) -->
 
+### Pedagogical Core
+
+Our "Integrated Structured-Literacy Stack" includes:
+
+| Layer                           | Approach                                                            | Implementation                                                        |
+| ------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| **Phonology → Phonics**         | Link manipulation tasks to letters to speed catch-up                | 2-min sound–letter drills before each decoding micro-lesson           |
+| **Syllables & Morphology**      | Multisyllabic decoding strategies + explicit morphology instruction | One "3-step" syllable routine; color-coded morphemes                  |
+| **Fluency Bridge**              | Guided + repeated oral reading; silent-fluency programs             | Weekly: 2 guided reads, 1 auto-timed silent-read challenge            |
+| **Vocabulary & Syntax**         | Direct morphology + academic-word teaching; sentence-combining      | Vocabulary in phonics, fluency and writing games                      |
+| **Comprehension Strategies**    | Summarize, question-generate, monitor, recognize text structures    | Animated thought-bubble prompts; auto-filling graphic organizers      |
+| **Writing & Spelling Loop**     | Encoding practice; SRSD writing routines                            | Quick-write after each reading lesson; SRSD planner for longer pieces |
+| **Digital & Critical Literacy** | Media-literacy skills for evaluating AI-driven content              | Monthly "Think-Like-a-Fact-Checker" quests                            |
+
+### Adaptive Learning Brain
+
+The platform uses Bayesian Knowledge Tracing (BKT) and Item Response Theory (IRT) to personalize learning:
+
+- **BKT-inside-Firestore:** For each micro-skill, Cloud Functions store four BKT parameters and update mastery probability
+- **IRT-flavoured Diagnostics:** Initial CAT chooses items that maximize information
+
 ### Key Features
 
 - **Phonics Playground**: Interactive phonics exercises with Sound-Swap games and Elkonin-Box tile linking
-- **Fluency Sprint**: Timed WCPM (Words Correct Per Minute) practice with Standard Celeration charts
-- **Morphology Engine**: Word-Factory with drag-drop morpheme matrices and semantic feature analysis
+- **Fluency Studio**: Timed WCPM (Words Correct Per Minute) practice with prosody coaching
+- **Morphology Lab**: Word-Factory with color-coded morpheme analysis
 - **Sentence Combiner**: Three-step complexity ladder for sentence construction
 - **Context Clue Detective**: Interactive unknown-word highlighter with context clue routines
 - **Story Map Builder**: Interactive story-grammar maps and expository inference missions
 - **Speech Practice**: Web Speech recognition with confidence-band UI and self-validation
 - **Writing Workshop**: POW+TREE tabbed wizard with revision checklists and peer-review prompts
-- **Teletherapy Widget**: Embedded video-chat mockup with shared whiteboard
-- **Image Generation**: Local SDXL-Turbo with Replicate SDXL fallback
+- **Skill Tree Dashboard**: Hexagonal grid showing skill mastery and recommended next steps
+- **Motivation Engine**: Features designed to satisfy Autonomy, Competence, and Relatedness needs
 
 ## Prerequisites
 
@@ -75,6 +96,8 @@ Hooked On Phonetics is a comprehensive literacy platform that provides interacti
    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
    - Enable Authentication, Firestore, and Functions
    - Download your Firebase configuration
+   - Set up Firestore collections for skills, lessons, and user progress
+   - Deploy Firebase Functions for BKT (Bayesian Knowledge Tracing) model
 
 ## Running Locally
 
@@ -101,23 +124,25 @@ The Phonics Playground module provides interactive exercises for developing phon
 - Elkonin-Box Tiles: Segment words into individual sounds
 - Progress tracking with visual feedback
 
-### Fluency Sprint
+### Fluency Studio
 
-The Fluency Sprint module helps users improve reading fluency through timed reading exercises.
+The Fluency Studio module helps users improve reading fluency through timed reading exercises with prosody coaching.
 
 **Features:**
 
 - Timed reading passages with automatic WCPM calculation
-- Standard Celeration charts to track progress
+- Prosody coach highlighting phrasing and expression
+- Recording and playback for self-assessment
 - Adaptive difficulty based on accuracy rates
 
-### Morphology Engine
+### Morphology Lab
 
-The Morphology Engine helps users understand word structure and meaning through interactive exercises.
+The Morphology Lab helps users understand word structure and meaning through interactive exercises with color-coded morpheme analysis.
 
 **Features:**
 
 - Word-Factory with prefixes, roots, and suffixes
+- Color-coded morpheme visualization
 - Semantic Feature Analysis for vocabulary development
 - Interactive morpheme matrices
 
@@ -190,6 +215,28 @@ These features provide support for remote therapy sessions and customized learni
 - Embedded video-chat mockup
 - Shared whiteboard
 - Intensity toggle between "High Intensity" (daily) and "Maintenance" (3×/week)
+
+### Skill Tree Dashboard
+
+The Skill Tree Dashboard provides a visual representation of the user's progress and skill mastery.
+
+**Features:**
+
+- Hexagonal grid showing skill mastery levels
+- Color-coded skills by category and mastery level
+- Recommended next skills based on BKT model
+- Visual progress tracking
+
+### Motivation Engine
+
+The Motivation Engine is designed to enhance user engagement and motivation based on Self-Determination Theory (SDT).
+
+**Features:**
+
+- Autonomy: User choice in learning paths and customization options
+- Competence: Skill mastery visualization and appropriate challenge levels
+- Relatedness: Optional social features and collaborative activities
+- Resilience loop: Focus cue → attempt → feedback → growth-mindset reframe → micro-goal update
 
 ### Image Service
 

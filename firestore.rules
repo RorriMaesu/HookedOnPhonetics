@@ -4,22 +4,50 @@ service cloud.firestore {
     // Allow authenticated users to read and write only their own data
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      // User skills (for BKT model)
+      match /skills/{skillId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
     }
-    
+
     // User progress data
     match /progress/{progressId} {
-      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+      allow update: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow delete: if false; // Progress records should not be deleted
     }
-    
+
     // User settings
     match /settings/{settingId} {
       allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
     }
-    
+
     // Shared educational content (read-only for authenticated users)
     match /content/{contentId} {
       allow read: if request.auth != null;
       allow write: if false; // Only admins can write (handled through Firebase Admin SDK)
+    }
+
+    // Skills (for BKT model, read-only for users)
+    match /skills/{skillId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Only admins can modify skills (via Admin SDK)
+    }
+
+    // Lessons (read-only for users)
+    match /lessons/{lessonId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Only admins can modify lessons (via Admin SDK)
+    }
+
+    // Events (for analytics)
+    match /events/{eventId} {
+      allow read: if false; // Only accessible via Admin SDK
+      allow create: if request.auth != null; // Users can create events
+      allow update, delete: if false; // Events should be immutable
     }
   }
 }

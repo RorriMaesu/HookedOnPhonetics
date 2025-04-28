@@ -1,0 +1,229 @@
+.skill-tree-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.skill-tree-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+.skill-tree-loading,
+.skill-tree-error {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+.skill-tree-error {
+  color: #f44336;
+}
+
+.next-skill-container {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.next-skill-container h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.next-skill-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.next-skill-card:hover {
+  transform: translateY(-5px);
+}
+
+.next-skill-card h4 {
+  margin-top: 0;
+  color: #333;
+}
+
+.start-skill-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.start-skill-button:hover {
+  background-color: #45a049;
+}
+
+.skill-tree-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.skill-hex {
+  position: relative;
+  width: 100%;
+  padding-bottom: 115%; /* Hexagon aspect ratio */
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background-color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.skill-hex::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  background-color: white;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: 1;
+}
+
+.skill-hex::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--mastery-percent, 0%);
+  background-color: var(--mastery-color, #f44336);
+  opacity: 0.3;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: 2;
+  transition: height 0.5s ease-in-out;
+}
+
+.skill-hex:hover {
+  transform: scale(1.05);
+}
+
+.skill-hex.mastered::after {
+  opacity: 0.5;
+}
+
+.skill-hex-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 3;
+  text-align: center;
+}
+
+.skill-hex-content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.mastery-bar {
+  width: 80%;
+  height: 8px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.mastery-progress {
+  height: 100%;
+  background-color: var(--mastery-color, #f44336);
+  transition: width 0.5s ease-in-out;
+}
+
+.mastery-text {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.skill-categories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.category-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.category-color.phonology {
+  background-color: #f44336;
+}
+
+.category-color.phonics {
+  background-color: #ff9800;
+}
+
+.category-color.syllables {
+  background-color: #ffeb3b;
+}
+
+.category-color.morphology {
+  background-color: #8bc34a;
+}
+
+.category-color.fluency {
+  background-color: #4caf50;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skill-tree-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .skill-hex-content h3 {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .skill-tree-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+  
+  .skill-hex-content h3 {
+    font-size: 0.8rem;
+  }
+  
+  .skill-categories {
+    flex-direction: column;
+    align-items: center;
+  }
+}
