@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hooked On Phonetics - A revolutionary literacy platform transforming how we teach reading and writing skills">
+    <title>Hooked On Phonetics | Revolutionary Literacy Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4285F4;
+            --secondary: #34A853;
+            --accent: #FBBC05;
+            --danger: #EA4335;
+            --dark: #202124;
+            --light: #F8F9FA;
+            --gray: #5F6368;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: 100% 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 180px;
+            height: auto;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: var(--accent);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            flex: 1 1 300px;
+            max-width: 350px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-desc {
+            color: var(--gray);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .tech-item {
+            text-align: center;
+            flex: 0 0 120px;
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .tech-name {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .cta {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .cta h2 {
+            color: white;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            margin-top: 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .coffee-btn {
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .coffee-btn img {
+            height: 60px;
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .hero {
+                padding: 80px 20px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hexagonal skill tree visualization */
+        .skill-tree {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 50px auto;
+            gap: 15px;
+        }
+
+        .skill-hex {
+            width: 120px;
+            height: 104px;
+            background-color: white;
+            position: relative;
+            margin: 15px 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .skill-hex:before,
+        .skill-hex:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+        }
+
+        .skill-hex:before {
+            bottom: 100%;
+            border-bottom: 34.6px solid white;
+        }
+
+        .skill-hex:after {
+            top: 100%;
+            border-top: 34.6px solid white;
+        }
+
+        .skill-hex:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .skill-hex.phonics { background-color: var(--primary); color: white; }
+        .skill-hex.fluency { background-color: var(--secondary); color: white; }
+        .skill-hex.morphology { background-color: var(--accent); color: var(--dark); }
+        .skill-hex.comprehension { background-color: var(--danger); color: white; }
+        .skill-hex.writing { background-color: var(--dark); color: white; }
+
+        .skill-hex.phonics:before { border-bottom-color: var(--primary); }
+        .skill-hex.phonics:after { border-top-color: var(--primary); }
+        .skill-hex.fluency:before { border-bottom-color: var(--secondary); }
+        .skill-hex.fluency:after { border-top-color: var(--secondary); }
+        .skill-hex.morphology:before { border-bottom-color: var(--accent); }
+        .skill-hex.morphology:after { border-top-color: var(--accent); }
+        .skill-hex.comprehension:before { border-bottom-color: var(--danger); }
+        .skill-hex.comprehension:after { border-top-color: var(--danger); }
+        .skill-hex.writing:before { border-bottom-color: var(--dark); }
+        .skill-hex.writing:after { border-top-color: var(--dark); }
+
+        .skill-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Redirect notice */
+        .redirect-notice {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--accent);
+            color: var(--dark);
+            text-align: center;
+            padding: 10px;
+            font-weight: 500;
+            z-index: 1000;
+        }
+
+        .redirect-notice a {
+            color: var(--primary);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-notice">
+        This is a portfolio showcase. Visit the <a href="https://hookedonphonetics-d58c3.web.app/" target="_blank">live application</a> to experience the full platform.
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <img src="assets/logo.svg" alt="Hooked On Phonetics Logo" class="logo">
+            <h1>Hooked On Phonetics</h1>
+            <p class="tagline">A revolutionary literacy platform transforming how we teach reading and writing skills</p>
+            <div>
+                <a href="https://hookedonphonetics-d58c3.web.app/" class="btn btn-primary" target="_blank">Launch App</a>
+                <a href="https://github.com/RorriMaesu/HookedOnPhonetics" class="btn btn-outline" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Experience the Future of Literacy Education</h2>
+                <p>Hooked On Phonetics is more than just an app—it's a comprehensive educational ecosystem designed to revolutionize how we teach and learn literacy skills.</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📚</div>
+                    <h3 class="feature-title">Evidence-Based Approach</h3>
+                    <p class="feature-desc">Combines cutting-edge technology with proven literacy science for maximum effectiveness.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="feature-title">Adaptive Learning</h3>
+                    <p class="feature-desc">Personalized learning paths using Bayesian Knowledge Tracing and Item Response Theory.</p>
+                </div>
+
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🎮</div>
+                    <h3 class="feature-title">Engaging Interface</h3>
+                    <p class="feature-desc">Game-like elements make learning enjoyable while maintaining educational rigor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modules" style="background-color: #f0f4f8;">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Interactive Learning Modules</h2>
+                <p>Our comprehensive suite of learning tools addresses every aspect of literacy development</p>
+            </div>
+
+            <div class="skill-tree">
+                <div class="skill-hex phonics">
+                    <div class="skill-name">Phonics Playground</div>
+                </div>
+                <div class="skill-hex fluency">
+                    <div class="skill-name">Fluency Studio</div>
+                </div>
+                <div class="skill-hex morphology">
+                    <div class="skill-name">Morphology Lab</div>
+                </div>
+                <div class="skill-hex comprehension">
+                    <div class="skill-name">Context Detective</div>
+                </div>
+                <div class="skill-hex writing">
+                    <div class="skill-name">Writing Workshop</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Built with Modern Technology</h2>
+                <p>Leveraging the latest web technologies for a seamless, responsive experience</p>
+            </div>
+
+            <div class="tech-stack">
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">⚛️</div>
+                    <div class="tech-name">React</div>
+                </div>
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">🔥</div>
+                    <div class="tech-name">Firebase</div>
+                </div>
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">🎨</div>
+                    <div class="tech-name">TailwindCSS</div>
+                </div>
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">🔄</div>
+                    <div class="tech-name">Zustand</div>
+                </div>
+                <div class="tech-item fade-in">
+                    <div class="tech-icon">🚀</div>
+                    <div class="tech-name">Vite</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Transform Literacy Education?</h2>
+            <p class="tagline">Experience the platform that's changing how we teach reading and writing skills</p>
+            <a href="https://hookedonphonetics-d58c3.web.app/" class="btn btn-primary" target="_blank">Launch Application</a>
+            <a href="https://buymeacoffee.com/rorrimaesu" class="coffee-btn" target="_blank">
+                <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee">
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <img src="assets/logo.svg" alt="Hooked On Phonetics Logo" class="logo" style="width: 120px;">
+            <div class="social-links">
+                <a href="https://github.com/RorriMaesu" target="_blank">GitHub</a>
+            </div>
+            <p>Created by <a href="https://github.com/RorriMaesu" target="_blank">Andrew J. Green</a></p>
+            <p class="copyright">© 2025 Hooked On Phonetics. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation for fade-in elements
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Add a slight delay before redirecting to the live app
+            setTimeout(() => {
+                const redirectNotice = document.querySelector('.redirect-notice');
+                if (redirectNotice) {
+                    redirectNotice.style.display = 'block';
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
