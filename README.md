@@ -2,502 +2,107 @@
 
 <div align="center">
 
-![Hooked On Phonetics Logo](client/public/images/logo.png)
+<img src="assets/logo.png" alt="Hooked On Phonetics Logo" width="200"/>
 
-A production-ready, full-stack literacy and speech web application designed to help users improve their reading, writing, and speech skills.
+### A revolutionary literacy platform transforming how we teach reading and writing skills
 
-[![Deploy to GitHub Pages](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-gh-pages.yml/badge.svg)](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-gh-pages.yml)
-[![Deploy to Firebase](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-firebase.yml/badge.svg)](https://github.com/RorriMaesu/HookedOnPhonetics/actions/workflows/deploy-firebase.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-20.x-brightgreen.svg)](https://nodejs.org/)
-[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
-[![Firebase](https://img.shields.io/badge/Firebase-10.x-orange.svg)](https://firebase.google.com/)
+<a href="https://hookedonphonetics-d58c3.web.app/" target="_blank"><img src="https://img.shields.io/badge/Live_Demo-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Demo" /></a>
+<a href="https://github.com/RorriMaesu" target="_blank"><img src="https://img.shields.io/badge/Created_by_@RorriMaesu-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
+
+<br/>
+
+<a href="https://buymeacoffee.com/rorrimaesu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 </div>
 
-## Overview
+## 🚀 Experience the Future of Literacy Education
 
-Hooked On Phonetics is a comprehensive literacy platform that provides interactive tools for phonics, fluency, morphology, sentence construction, semantic analysis, context clues, story mapping, speech practice, and writing workshops. The platform is built on an "Integrated Structured-Literacy Stack" that combines evidence-based approaches to literacy instruction with modern technology.
+**Hooked On Phonetics** is more than just an app—it's a comprehensive educational ecosystem designed to revolutionize how we teach and learn literacy skills. After thousands of hours of research, development, and testing, I'm proud to share this project with the world.
 
-<!-- Architecture diagram will be added here in the future -->
-<!-- ![Architecture Diagram](docs/architecture-diagram.png) -->
+### [✨ Try the Live Application](https://hookedonphonetics-d58c3.web.app/)
 
-### Pedagogical Core
+## 🌟 Why This Project Matters
 
-Our "Integrated Structured-Literacy Stack" includes:
+In today's digital world, strong literacy skills remain the foundation of all learning. Yet traditional approaches often fail to engage students or adapt to their individual needs. Hooked On Phonetics addresses this challenge by combining:
 
-| Layer                           | Approach                                                            | Implementation                                                        |
-| ------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| **Phonology → Phonics**         | Link manipulation tasks to letters to speed catch-up                | 2-min sound–letter drills before each decoding micro-lesson           |
-| **Syllables & Morphology**      | Multisyllabic decoding strategies + explicit morphology instruction | One "3-step" syllable routine; color-coded morphemes                  |
-| **Fluency Bridge**              | Guided + repeated oral reading; silent-fluency programs             | Weekly: 2 guided reads, 1 auto-timed silent-read challenge            |
-| **Vocabulary & Syntax**         | Direct morphology + academic-word teaching; sentence-combining      | Vocabulary in phonics, fluency and writing games                      |
-| **Comprehension Strategies**    | Summarize, question-generate, monitor, recognize text structures    | Animated thought-bubble prompts; auto-filling graphic organizers      |
-| **Writing & Spelling Loop**     | Encoding practice; SRSD writing routines                            | Quick-write after each reading lesson; SRSD planner for longer pieces |
-| **Digital & Critical Literacy** | Media-literacy skills for evaluating AI-driven content              | Monthly "Think-Like-a-Fact-Checker" quests                            |
+- **Evidence-based literacy science** with cutting-edge technology
+- **Adaptive learning algorithms** that personalize the experience for each user
+- **Engaging, game-like interfaces** that make learning enjoyable and effective
+- **Comprehensive progress tracking** for educators and learners
 
-### Adaptive Learning Brain
+## 🧠 The Science Behind the Magic
 
-The platform uses Bayesian Knowledge Tracing (BKT) and Item Response Theory (IRT) to personalize learning:
+Hooked On Phonetics is built on an "Integrated Structured-Literacy Stack" that combines the most effective approaches to literacy instruction:
 
-- **BKT-inside-Firestore:** For each micro-skill, Cloud Functions store four BKT parameters and update mastery probability
-- **IRT-flavoured Diagnostics:** Initial CAT chooses items that maximize information
+| Layer                      | Approach                     | Implementation                                             |
+| -------------------------- | ---------------------------- | ---------------------------------------------------------- |
+| **Phonology → Phonics**    | Sound-letter connections     | Interactive sound-swap games and visual phoneme mapping    |
+| **Syllables & Morphology** | Word structure analysis      | Color-coded morpheme visualization and pattern recognition |
+| **Fluency Development**    | Guided reading practice      | Timed passages with prosody coaching and instant feedback  |
+| **Comprehension Building** | Strategic reading techniques | Interactive story mapping and context analysis tools       |
+| **Writing & Expression**   | Structured writing process   | Guided composition with revision support and peer feedback |
 
-### Key Features
+## 🛠️ Key Features That Set Us Apart
 
-- **Phonics Playground**: Interactive phonics exercises with Sound-Swap games and Elkonin-Box tile linking
-- **Fluency Studio**: Timed WCPM (Words Correct Per Minute) practice with prosody coaching
-- **Morphology Lab**: Word-Factory with color-coded morpheme analysis
-- **Sentence Combiner**: Three-step complexity ladder for sentence construction
-- **Context Clue Detective**: Interactive unknown-word highlighter with context clue routines
-- **Story Map Builder**: Interactive story-grammar maps and expository inference missions
-- **Speech Practice**: Web Speech recognition with confidence-band UI and self-validation
-- **Writing Workshop**: POW+TREE tabbed wizard with revision checklists and peer-review prompts
-- **Skill Tree Dashboard**: Hexagonal grid showing skill mastery and recommended next steps
-- **Motivation Engine**: Features designed to satisfy Autonomy, Competence, and Relatedness needs
+### Adaptive Learning Engine
 
-## Prerequisites
+The platform uses Bayesian Knowledge Tracing and Item Response Theory to create a truly personalized learning path for each user, ensuring they're always working at the optimal challenge level.
 
-- Node.js 20.x or later
-- Python 3.12 (for SDXL-Turbo batch rendering)
-- pnpm (package manager)
-- Firebase project (for authentication and database)
-- API keys for Gemini, Replicate, and Deepgram (optional)
-- NVIDIA GPU (optional, for local image generation)
+### Interactive Modules
 
-## Installation
+- **Phonics Playground**: Gamified phonological awareness exercises
+- **Fluency Studio**: Real-time reading assessment with audio feedback
+- **Morphology Lab**: Word-building with visual morpheme analysis
+- **Context Detective**: Vocabulary development through contextual analysis
+- **Writing Workshop**: Structured composition with AI-assisted feedback
 
-1. Clone the repository:
+### Progress Visualization
 
-   ```bash
-   git clone https://github.com/RorriMaesu/HookedOnPhonetics.git
-   cd HookedOnPhonetics
-   ```
+The hexagonal skill tree provides a visual representation of learning progress, helping users see their growth and identify areas for improvement.
 
-2. Install dependencies:
+## 💡 Why Support This Project?
 
-   ```bash
-   pnpm install
-   ```
+Developing educational technology that truly makes a difference requires enormous investment of time, expertise, and resources. Your support helps:
 
-3. Set up environment variables:
+- **Maintain and improve** the platform for current users
+- **Expand accessibility** to reach more learners, especially those with limited resources
+- **Develop new features** based on educator and student feedback
+- **Research and implement** the latest advances in literacy science
 
-   - Copy `.env.example` to `.env` in both the client and server directories
-   - Fill in your API keys and configuration values (see Configuration section below)
+## ☕ Fuel the Next Phase of Development
 
-4. Set up Python environment for image generation (optional):
+If you believe in the power of education to transform lives, consider supporting this project. Every contribution helps bring effective literacy tools to more learners around the world.
 
-   ```bash
-   cd scripts
-   pip install -r requirements.txt
-   ```
+<div align="center">
+<a href="https://buymeacoffee.com/rorrimaesu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</div>
 
-5. Set up Firebase:
-   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
-   - Enable Authentication, Firestore, and Functions
-   - Download your Firebase configuration
-   - Set up Firestore collections for skills, lessons, and user progress
-   - Deploy Firebase Functions for BKT (Bayesian Knowledge Tracing) model
+## 🔗 Connect & Learn More
 
-## Running Locally
+- **Live Application**: [https://hookedonphonetics-d58c3.web.app/](https://hookedonphonetics-d58c3.web.app/)
+- **Developer**: [GitHub @RorriMaesu](https://github.com/RorriMaesu)
+- **Support**: [Buy Me A Coffee](https://buymeacoffee.com/rorrimaesu)
 
-Start the development server:
+## 🚀 Technical Highlights
 
-```bash
-pnpm dev
-```
+- **Progressive Web App** with offline functionality and install-to-home-screen capability
+- **Real-time collaboration** features for educators and learners
+- **Cloud-based architecture** for seamless updates and scalability
+- **Responsive design** that works on all devices from smartphones to desktops
+- **AI-powered content generation** for personalized learning materials
 
-This will concurrently start both the client and server:
+## 📱 Available Everywhere
 
-- Client: http://localhost:3000
-- Server: http://localhost:3001
+Access Hooked On Phonetics on any device with a web browser:
 
-## Module Guide
+- **Desktop computers** for classroom and home use
+- **Tablets** for interactive learning sessions
+- **Smartphones** for on-the-go practice
+- **Interactive whiteboards** for group instruction
 
-### Phonics Playground
+---
 
-The Phonics Playground module provides interactive exercises for developing phonological awareness and phonics skills.
-
-**Features:**
-
-- Sound-Swap Games: Practice manipulating sounds in words
-- Elkonin-Box Tiles: Segment words into individual sounds
-- Progress tracking with visual feedback
-
-### Fluency Studio
-
-The Fluency Studio module helps users improve reading fluency through timed reading exercises with prosody coaching.
-
-**Features:**
-
-- Timed reading passages with automatic WCPM calculation
-- Prosody coach highlighting phrasing and expression
-- Recording and playback for self-assessment
-- Adaptive difficulty based on accuracy rates
-
-### Morphology Lab
-
-The Morphology Lab helps users understand word structure and meaning through interactive exercises with color-coded morpheme analysis.
-
-**Features:**
-
-- Word-Factory with prefixes, roots, and suffixes
-- Color-coded morpheme visualization
-- Semantic Feature Analysis for vocabulary development
-- Interactive morpheme matrices
-
-### Sentence Combiner
-
-The Sentence Combiner helps users develop more complex sentence structures.
-
-**Features:**
-
-- Three-step complexity ladder (coordinate → subordinate → participial)
-- Guided practice with hints and examples
-- Automatic feedback on sentence structure
-
-### Semantic Feature Analyzer
-
-The Semantic Feature Analyzer helps users develop deeper understanding of vocabulary.
-
-**Features:**
-
-- Analysis templates for Tier-2 words
-- Category, function, examples, and non-examples
-- Synonym and antonym exploration
-
-### Context Clue Detective
-
-The Context Clue Detective helps users develop strategies for understanding unknown words.
-
-**Features:**
-
-- Interactive text with unknown word highlighting
-- Guided context clue routines
-- Different types of context clues (definition, example, etc.)
-
-### Story Map Builder & Discourse Drills
-
-These modules help users develop narrative and expository writing skills.
-
-**Features:**
-
-- Interactive story-grammar maps
-- Expository inference missions
-- Comprehension questions with feedback
-
-### Speech Practice
-
-The Speech Practice module helps users improve pronunciation and speaking skills.
-
-**Features:**
-
-- Web Speech recognition with confidence-band UI
-- Self-validation taps on low-confidence words
-- Pronunciation exercises with feedback
-
-### Writing Workshop
-
-The Writing Workshop module guides users through the writing process.
-
-**Features:**
-
-- POW+TREE tabbed wizard (Plan, Organize, Write, Revise)
-- Mandatory revision checklist
-- Peer-review prompts (Gemini-driven)
-
-### Teletherapy Widget & Intensity Toggle
-
-These features provide support for remote therapy sessions and customized learning schedules.
-
-**Features:**
-
-- Embedded video-chat mockup
-- Shared whiteboard
-- Intensity toggle between "High Intensity" (daily) and "Maintenance" (3×/week)
-
-### Skill Tree Dashboard
-
-The Skill Tree Dashboard provides a visual representation of the user's progress and skill mastery.
-
-**Features:**
-
-- Hexagonal grid showing skill mastery levels
-- Color-coded skills by category and mastery level
-- Recommended next skills based on BKT model
-- Visual progress tracking
-
-### Motivation Engine
-
-The Motivation Engine is designed to enhance user engagement and motivation based on Self-Determination Theory (SDT).
-
-**Features:**
-
-- Autonomy: User choice in learning paths and customization options
-- Competence: Skill mastery visualization and appropriate challenge levels
-- Relatedness: Optional social features and collaborative activities
-- Resilience loop: Focus cue → attempt → feedback → growth-mindset reframe → micro-goal update
-
-### Image Service
-
-The Image Service provides educational images for various modules.
-
-**Features:**
-
-- Local SDXL-Turbo for fast generation
-- Replicate SDXL fallback for higher quality
-- Prompt-hash caching for efficiency
-
-## Scripts
-
-### render_batch.py
-
-This script processes a batch of image generation prompts using SDXL-Turbo.
-
-**Usage:**
-
-```bash
-python scripts/render_batch.py --prompt "Your prompt here" --output_dir "client/public/images"
-```
-
-### nightlyRender.ps1
-
-This PowerShell script schedules nightly batch rendering during off-hours.
-
-**Usage:**
-
-```bash
-# Run the script directly
-.\scripts\nightlyRender.ps1
-
-# Schedule the script to run daily at 2:00 AM
-.\scripts\nightlyRender.ps1 -Schedule
-```
-
-**Note:** Requires administrative privileges to schedule tasks.
-
-### deploy.ps1
-
-This PowerShell script builds and deploys the application to Azure Static Web Apps.
-
-**Usage:**
-
-```bash
-.\deploy.ps1
-```
-
-## Testing
-
-Run tests:
-
-```bash
-pnpm test
-```
-
-This will run tests for both the client and server with Vitest.
-
-For coverage reports:
-
-```bash
-pnpm test:coverage
-```
-
-End-to-end tests with Playwright:
-
-```bash
-cd e2e
-npx playwright test
-```
-
-## CI/CD and Deployment
-
-The project uses GitHub Actions for continuous integration and deployment. For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
-
-### Dual Deployment Options
-
-This project supports two deployment options:
-
-1. **Firebase Hosting** (Recommended for Production)
-
-   - Complete hosting solution with HTTPS, CDN, and Firebase integration
-   - Deployed to `https://hookedonphonetics-d58c3.web.app`
-   - Ideal for production use with full Firebase functionality
-
-2. **GitHub Pages** (Great for Open Source Sharing)
-   - Free and easy to set up
-   - Deployed to `https://rorrimeasu.github.io/HookedOnPhonetics/`
-   - Ideal for sharing with the open source community
-
-Both deployments use the same Firebase backend, so users can access the same data regardless of which URL they use.
-
-### GitHub Actions Workflows
-
-#### GitHub Pages Deployment
-
-- **Workflow File**: `.github/workflows/deploy-github-pages.yml`
-- **Trigger**: Push to `main` branch that changes client files or manual dispatch
-- **Environment**: Ubuntu latest
-- **Steps**:
-  1. Checkout code
-  2. Set up Node.js
-  3. Install dependencies
-  4. Build the application with environment variables from GitHub Secrets
-  5. Deploy to GitHub Pages
-
-#### Firebase Deployment
-
-- **Workflow File**: `.github/workflows/deploy-firebase.yml`
-- **Trigger**: Push to `main` branch that changes Firebase-related files or manual dispatch
-- **Environment**: Ubuntu latest
-- **Steps**:
-  1. Checkout code
-  2. Set up Node.js
-  3. Install Firebase CLI
-  4. Install dependencies
-  5. Build the client application
-  6. Deploy to Firebase (Functions, Firestore, and Hosting)
-
-### Setting Up Deployment
-
-1. **GitHub Pages**:
-
-   - Go to your repository settings
-   - Navigate to Pages
-   - Set source to GitHub Actions
-
-2. **Firebase**:
-
-   - Install Firebase CLI: `npm install -g firebase-tools`
-   - Login to Firebase: `firebase login:ci` to get a token
-   - Add the token to GitHub Secrets as `FIREBASE_TOKEN`
-   - Add all Firebase configuration values to GitHub Secrets
-   - **Important**: Upgrade your Firebase project to the Blaze (pay-as-you-go) plan to deploy Firebase Functions
-
-### Deployment Scripts
-
-The project includes several scripts to automate the deployment process:
-
-1. **setup-firebase.js**: Sets up Firebase configuration and creates a service account key
-2. **init-firestore.js**: Initializes Firestore with sample data
-3. **setup-functions.js**: Deploys Firebase Functions, Firestore Rules, and Storage Rules
-4. **setup-hosting.js**: Builds and deploys the client application to Firebase Hosting
-5. **setup-github-pages.js**: Builds the client application for GitHub Pages deployment
-6. **setup-all.js**: Runs all the above scripts in sequence
-
-7. **GitHub Secrets**:
-   Add the following secrets to your repository:
-
-   - `FIREBASE_API_KEY`: Your Firebase API key
-   - `FIREBASE_AUTH_DOMAIN`: Your Firebase auth domain
-   - `FIREBASE_PROJECT_ID`: Your Firebase project ID
-   - `FIREBASE_STORAGE_BUCKET`: Your Firebase storage bucket
-   - `FIREBASE_MESSAGING_SENDER_ID`: Your Firebase messaging sender ID
-   - `FIREBASE_APP_ID`: Your Firebase app ID
-   - `FIREBASE_MEASUREMENT_ID`: Your Firebase measurement ID
-   - `FIREBASE_TOKEN`: Your Firebase CI token
-   - `FIREBASE_FUNCTIONS_URL`: Your Firebase Functions URL
-   - `FIREBASE_SERVICE_ACCOUNT`: Your Firebase service account key JSON
-
-   To add these secrets:
-
-   1. Go to your repository on GitHub
-   2. Click on "Settings"
-   3. In the left sidebar, click on "Secrets and variables" > "Actions"
-   4. Click on "New repository secret"
-   5. Add each secret with the name and value from your Firebase project
-
-   For the `FIREBASE_SERVICE_ACCOUNT` secret:
-
-   1. Go to the Firebase Console > Project Settings > Service Accounts
-   2. Click on "Generate new private key"
-   3. Open the downloaded JSON file
-   4. Copy the entire content of the file
-   5. Paste it as the value for the `FIREBASE_SERVICE_ACCOUNT` secret
-
-## Configuration
-
-### Environment Variables
-
-The application uses environment variables for configuration. Copy the `.env.example` files to `.env` in both the client and server directories and fill in your values:
-
-#### Client Environment Variables
-
-```
-# API URL
-VITE_API_URL=http://localhost:3001/api
-
-# Firebase Configuration
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
-```
-
-#### Server Environment Variables
-
-```
-# Firebase Configuration
-FIREBASE_API_KEY=your_api_key
-FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
-FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-FIREBASE_APP_ID=your_app_id
-FIREBASE_MEASUREMENT_ID=your_measurement_id
-
-# API Keys (Optional)
-GEMINI_API_KEY=your_gemini_api_key
-REPLICATE_API_TOKEN=your_replicate_api_token
-DEEPGRAM_API_KEY=your_deepgram_api_key
-
-# Server Configuration
-PORT=3001
-NODE_ENV=development
-```
-
-### Firebase Service Account
-
-For server-side Firebase authentication, you'll need a service account key:
-
-1. Go to Firebase Console > Project Settings > Service Accounts
-2. Click "Generate new private key"
-3. Save the JSON file to `functions/config/serviceAccountKey.json`
-
-### Security
-
-- All secrets are read from `.env` files (not committed to the repository)
-- Example configuration is provided in `.env.example` files
-- Firebase security rules restrict read/write access to authenticated users
-- HTTPS is enforced in production
-- Service account keys are never committed to the repository
-
-## Troubleshooting
-
-### GPU Conflicts
-
-If you encounter GPU conflicts when running the image generation scripts:
-
-1. Check that no other GPU-intensive applications are running
-2. Try setting a specific GPU ID with the `--gpu_id` parameter
-3. Fall back to CPU rendering if necessary
-
-### Windows Elevation
-
-Some scripts require administrative privileges:
-
-- The `nightlyRender.ps1` script with `-Schedule` parameter requires elevation
-- Run PowerShell as Administrator when scheduling tasks
-
-### Common Errors
-
-- **Firebase Authentication Errors**: Check your Firebase configuration in `.env`
-- **API Key Errors**: Ensure all required API keys are set in `.env`
-- **CORS Errors**: Make sure the server is running and CORS is properly configured
-- **GPU Out of Memory**: Reduce batch size or image dimensions in the image generation scripts
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+<div align="center">
+<p>Thank you for exploring Hooked On Phonetics!</p>
+<p>Your support makes a difference in the future of literacy education.</p>
+</div>
