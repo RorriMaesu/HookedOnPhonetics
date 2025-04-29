@@ -5,18 +5,10 @@
 !.gitignore
 !README.md
 !LICENSE
-!DEPLOYMENT.md
-!FIREBASE-SETUP.md
 
 # ...and not these directories...
-!docs/
-!client/
-client/*
-!client/public/
-client/public/*
-!client/public/images/
-client/public/images/*
-!client/public/images/logo.png
+!assets/
+!assets/logo.png
 
 # ...and not the GitHub Pages workflow
 !.github/
