@@ -1,0 +1,207 @@
+name: Deploy Redirect to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deploy-github-pages.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy-redirect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create Redirect Files
+        run: |
+          # Create directory for redirect files
+          mkdir -p redirect
+
+          # Create index.html with redirect to Firebase
+          cat > redirect/index.html << EOL
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Redirecting to Hooked On Phonetics</title>
+            <meta http-equiv="refresh" content="0;url=https://hookedonphonetics-d58c3.web.app/dashboard">
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f5f5f5;
+                flex-direction: column;
+                text-align: center;
+              }
+              .container {
+                max-width: 600px;
+                padding: 2rem;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              }
+              h1 {
+                color: #333;
+                margin-bottom: 1rem;
+              }
+              p {
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+              }
+              a {
+                color: #4a6da7;
+                text-decoration: none;
+                font-weight: bold;
+              }
+              a:hover {
+                text-decoration: underline;
+              }
+              .spinner {
+                border: 4px solid rgba(0, 0, 0, 0.1);
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border-left-color: #4a6da7;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 1.5rem;
+              }
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            </style>
+            <script>
+              // Redirect to the Firebase-hosted version
+              window.location.href = "https://hookedonphonetics-d58c3.web.app/dashboard";
+            </script>
+          </head>
+          <body>
+            <div class="container">
+              <div class="spinner"></div>
+              <h1>Redirecting to Hooked On Phonetics</h1>
+              <p>You are being redirected to the Hooked On Phonetics application.</p>
+              <p>If you are not redirected automatically, <a href="https://hookedonphonetics-d58c3.web.app/dashboard">click here</a>.</p>
+            </div>
+          </body>
+          </html>
+          EOL
+
+          # Create 404.html for handling other routes
+          cat > redirect/404.html << EOL
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Redirecting to Hooked On Phonetics</title>
+            <script>
+              // Get the current path
+              var path = window.location.pathname;
+
+              // Remove the leading slash and the "HookedOnPhonetics" part if present
+              path = path.replace(/^\/HookedOnPhonetics/, '');
+
+              // Redirect to the Firebase-hosted version with the same path
+              window.location.href = "https://hookedonphonetics-d58c3.web.app" + path;
+            </script>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f5f5f5;
+                flex-direction: column;
+                text-align: center;
+              }
+              .container {
+                max-width: 600px;
+                padding: 2rem;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              }
+              h1 {
+                color: #333;
+                margin-bottom: 1rem;
+              }
+              p {
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+              }
+              a {
+                color: #4a6da7;
+                text-decoration: none;
+                font-weight: bold;
+              }
+              a:hover {
+                text-decoration: underline;
+              }
+              .spinner {
+                border: 4px solid rgba(0, 0, 0, 0.1);
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border-left-color: #4a6da7;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 1.5rem;
+              }
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="spinner"></div>
+              <h1>Redirecting to Hooked On Phonetics</h1>
+              <p>You are being redirected to the Hooked On Phonetics application.</p>
+              <p>If you are not redirected automatically, <a href="https://hookedonphonetics-d58c3.web.app">click here</a>.</p>
+            </div>
+          </body>
+          </html>
+          EOL
+
+          # Create README.md for the gh-pages branch
+          cat > redirect/README.md << EOL
+          # Hooked On Phonetics - GitHub Pages Redirect
+
+          This branch contains the GitHub Pages redirect for the Hooked On Phonetics application.
+
+          The main application is hosted at: [https://hookedonphonetics-d58c3.web.app](https://hookedonphonetics-d58c3.web.app)
+
+          ## About
+
+          Hooked On Phonetics is a comprehensive literacy platform that provides interactive tools for phonics, fluency, morphology, sentence construction, semantic analysis, context clues, story mapping, speech practice, and writing workshops.
+
+          ## Repository
+
+          The source code for this project is available in the \`main\` branch of this repository: [https://github.com/RorriMaesu/HookedOnPhonetics](https://github.com/RorriMaesu/HookedOnPhonetics)
+
+          ## License
+
+          This project is licensed under the MIT License - see the LICENSE file in the main branch for details.
+          EOL
+
+          # Create .nojekyll file to prevent GitHub Pages from processing the site with Jekyll
+          touch redirect/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: redirect
+          branch: gh-pages
